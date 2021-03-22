@@ -37,6 +37,7 @@ class key_controller:
         self.move.publish(self.twist)
 
     def rotate_left(self):
+        self.twist.linear.x = 0
         self.twist.angular.z = math.pi/3
         self.move.publish(self.twist)
 
