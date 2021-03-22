@@ -29,3 +29,23 @@
   * <code>"q"</code>: Tilts the robot left with an angular speed of pi/3 rads/s
   * <code>"e"</code>: Tilts the robot right with an angular speed of pi/3 rads/s
   * <code>" "</code>: Halts all motion
+
+## Movement functions
+#### <code>x</code> represents the distance between two robots
+#### <code>y</code> represents the linear x velocity of the robot
+
+### Follow
+
+When the auxillary robots are following the leader robot, their motion is determined by the following function:
+![linear_vel_equation](https://user-images.githubusercontent.com/57344340/112061632-28dc8400-8b35-11eb-86f8-ddcb97500d38.PNG)
+![linear_vel_function](https://user-images.githubusercontent.com/57344340/112061642-2d08a180-8b35-11eb-8ca4-b448bcac5bb6.PNG)
+
+### Avoid
+
+When the auxilary robots are avoiding the leader robot, their motion is determined by the following function:
+![linear_vel_equation_avoid](https://user-images.githubusercontent.com/57344340/112062341-35151100-8b36-11eb-8bf5-dd030515c66a.PNG)
+![linear_vel_avoid](https://user-images.githubusercontent.com/57344340/112062349-36ded480-8b36-11eb-8cd3-87f3f0c46be5.PNG)
+
+
+
+
