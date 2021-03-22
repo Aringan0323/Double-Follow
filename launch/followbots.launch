@@ -1,0 +1,68 @@
+<launch>
+    <arg name="model" default="burger" doc="model type [burger, waffle, waffle_pi]"/>
+    <arg name="seeker1_pos_x" default="0"/>
+    <arg name="seeker1_pos_y" default=" 0"/>
+    <arg name="seeker1_pos_z" default=" 0.0"/>
+    <arg name="seeker1_yaw" default="0"/>
+    <arg name="seeker2_pos_x" default="-0.5"/>
+    <arg name="seeker2_pos_y" default=" 0"/>
+    <arg name="seeker2_pos_z" default=" 0.0"/>
+    <arg name="seeker2_yaw" default="0"/>
+    <arg name="seeker3_pos_x" default="-1"/>
+    <arg name="seeker3_pos_y" default="0"/>
+    <arg name="seeker3_pos_z" default=" 0.0"/>
+    <arg name="seeker3_yaw" default="0"/>
+    <arg name="hider_pos_x" default="2"/>
+    <arg name="hider_pos_y" default="0"/>
+    <arg name="hider_pos_z" default=" 0.0"/>
+    <arg name="hider_yaw" default="0" />
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/empty.world"/>
+      <arg name="paused" value="false"/>
+      <arg name="use_sim_time" value="true"/>
+      <arg name="gui" value="true"/>
+      <arg name="headless" value="false"/>
+      <arg name="debug" value="false"/>
+    </include>
+    <group ns="seeker1">
+        <param name="robot_description" command="$(find xacro)/xacro.py $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro"/>
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+            <param name="publish_frequency" type="double" value="50.0" />
+            <param name="tf_prefix" value="seeker1" />
+        </node>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model seeker1 -x $(arg seeker1_pos_x) -y $(arg seeker1_pos_y) -z $(arg seeker1_pos_z) -Y $(arg seeker1_yaw) -param robot_description" />
+    </group>
+    <group ns="seeker2">
+        <param name="robot_description" command="$(find xacro)/xacro.py $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro"/>
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+            <param name="publish_frequency" type="double" value="50.0" />
+            <param name="tf_prefix" value="seeker2" />
+        </node>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model seeker2 -x $(arg seeker2_pos_x) -y $(arg seeker2_pos_y) -z $(arg seeker2_pos_z) -Y $(arg seeker2_yaw) -param robot_description" />
+    </group>
+    <group ns="seeker3">
+        <param name="robot_description" command="$(find xacro)/xacro.py $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro"/>
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+            <param name="publish_frequency" type="double" value="50.0" />
+            <param name="tf_prefix" value="seeker3" />
+        </node>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model seeker3 -x $(arg seeker3_pos_x) -y $(arg seeker3_pos_y) -z $(arg seeker3_pos_z) -Y $(arg seeker3_yaw) -param robot_description" />
+    </group>
+    <group ns="hider">
+        <param name="robot_description" command="$(find xacro)/xacro.py $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+            <param name="publish_frequency" type="double" value="50.0" />
+            <param name="tf_prefix" value="hider" />
+        </node>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model hider -x $(arg hider_pos_x) -y $(arg hider_pos_y) -z $(arg hider_pos_z) -Y $(arg hider_yaw) -param robot_description" />
+    </group>
+    <node name="tf2_broadcaster" pkg="pa5" type="broadcaster.py" respawn="false" output="screen" >
+      <param name="bot1" type="string" value="seeker1" />
+      <param name="bot2" type="string" value="seeker2" />
+      <param name="bot3" type="string" value="seeker3" />
+      <param name="bot4" type="string" value="hider" />
+    </node>
+    <node pkg="pa5" type="key_controller.py" name="key_controller"  output="log" ></node>
+
+    
+</launch>
