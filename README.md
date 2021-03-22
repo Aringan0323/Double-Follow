@@ -31,8 +31,8 @@
   * <code>" "</code>: Halts all motion
 
 ## Movement functions
-#### <code>x</code> represents the distance between two robots
-#### <code>y</code> represents the linear x velocity of the robot
+#### <code>x</code> represents the distance between two robots in meters
+#### <code>y</code> represents the linear x velocity of the robot in meters per second
 
 ### Follow
 
