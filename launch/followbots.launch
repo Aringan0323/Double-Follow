@@ -12,10 +12,11 @@
     <arg name="seeker3_pos_y" default="0"/>
     <arg name="seeker3_pos_z" default=" 0.0"/>
     <arg name="seeker3_yaw" default="0"/>
-    <arg name="hider_pos_x" default="2"/>
+    <arg name="hider_pos_x" default="3"/>
     <arg name="hider_pos_y" default="0"/>
     <arg name="hider_pos_z" default=" 0.0"/>
     <arg name="hider_yaw" default="0" />
+    <arg name="reaction_to_leader" default="follow" />
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
       <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/empty.world"/>
       <arg name="paused" value="false"/>
@@ -63,6 +64,6 @@
       <param name="bot4" type="string" value="hider" />
     </node>
     <node pkg="pa5" type="key_controller.py" name="key_controller"  output="log" ></node>
-
+    <node pkg ="pa5" type="$(arg reaction_to_leader).py" name="reaction" output="screen"></node>
     
 </launch>

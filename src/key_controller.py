@@ -16,10 +16,12 @@ class key_controller:
                 'a':self.rotate_left,
                 'd':self.rotate_right,
                 'w':self.move_forward,
-                's':self.move_backward }
+                's':self.move_backward,
+                'q':self.tilt_left,
+                'e':self.tilt_right }
         self.key_sub = rospy.Subscriber('/keys', String, self.key_cb)
         self.move = rospy.Publisher(botname + '/cmd_vel', Twist, queue_size = 10)
-        self.state = 'e'
+        self.state = ' '
         self.twist = Twist()
 
     def key_cb(self, msg):
@@ -35,15 +37,26 @@ class key_controller:
         self.move.publish(self.twist)
 
     def rotate_right(self):
+        self.twist.linear.x = 0
         self.twist.angular.z = -math.pi/3
         self.move.publish(self.twist)
 
     def move_forward(self):
+        self.twist.angular.z = 0
         self.twist.linear.x = .3
         self.move.publish(self.twist)
 
     def move_backward(self):
+        self.twist.angular.z = 0
         self.twist.linear.x = -.3
+        self.move.publish(self.twist)
+
+    def tilt_left(self):
+        self.twist.angular.z = math.pi/3
+        self.move.publish(self.twist)
+
+    def tilt_right(self):
+        self.twist.angular.z = -math.pi/3
         self.move.publish(self.twist)
     
     def move_cmd(self):
