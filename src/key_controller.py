@@ -7,7 +7,11 @@ from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 
 class key_controller:
-
+    '''
+    Key controller subscribes to the key publisher and publishes commands to the "hider"
+    robot initialized in followbots.launch. Each function is mapped to a key in the dictionary
+    in the constructor for this class.
+    '''
     def __init__(self, botname):
         botname = "/" + botname
         rospy.init_node('key_controller')
@@ -65,6 +69,10 @@ class key_controller:
             self.movement_dict[state.lower()]()
 
 
+'''
+Subscribes to key commands and publishes velocity
+commands at a rate of 60 times per second
+'''
 if __name__ == "__main__":
     ct = key_controller('hider')
     while not rospy.is_shutdown():
