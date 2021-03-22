@@ -7,6 +7,10 @@
 * When the other robots are the avoiders, they will all move backwards away from the leader and try to avoid it.
 * The leader robot is controlled by key presses from the user of the program.
 
+## Link to video demonstration
+
+* https://drive.google.com/file/d/1bWj34bayopdyg2OYMgmTOUQ0oG4PXUSN/view?usp=sharing
+
 ## Usage
 
 ### Starting the simulation
